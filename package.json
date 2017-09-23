@@ -16,7 +16,6 @@
     }
   ],
   "scripts": {
-    "prestart": "./start.sh &"
   },
   "dependencies": {
     "socket.io-client": "1.4.8",
