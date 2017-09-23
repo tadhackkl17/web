@@ -7,7 +7,7 @@ var app = connect();
 app.use(connect.static(__dirname));
 
 console.log("HTTP server instance running @ 8081");
-http.createServer(app).listen(8081);
+http.createServer(app).listen(process.env.PORT || 8081);
 
 fs.stat('certificates/server.key', function(err, stat) {
     if(err == null) {
