@@ -1104,4 +1104,19 @@ $(document).ready(function() {
       '<small>For Safari, click to open a new tab. Note that only ' +
       'media and document files can be downloaded in the new tab.</small>');
   }
+
+  $('#capturedimagebtn').click(function() {
+    var $image = $("#capturedimage");
+    var video = $(".video-obj").get(1);
+
+    var canvas = document.createElement("canvas");
+    canvas.getContext('2d')
+        .drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    var img = document.createElement("img");
+    img.src = canvas.toDataURL();
+    console.log(canvas.toDataURL());
+    $image.prepend(img);
+  });
+
 });
