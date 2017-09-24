@@ -13,6 +13,8 @@ Demo.ShowStats = {};
 Demo.TransfersDone = {};
 Demo.Downloads = {};
 
+Demo.imageDataUrl = '';
+
 var _peerId = null;
 var selectedPeers = [];
 
@@ -884,6 +886,24 @@ $(document).ready(function() {
       $('#chat_input').val('');
     }
   });
+
+  $('#send_my_image').click(function(){
+
+    // var img = $("#capturedimage");
+    //
+    // var canvas = document.createElement("canvas");
+    // canvas.width = img.width;
+    // canvas.height = img.height;
+    // canvas.getContext('2d').drawImage(img, 0, 0);
+
+    if (selectedPeers.length > 0) {
+      Demo.Skylink.sendMessage(Demo.imageDataUrl, selectedPeers);
+    } else {
+      Demo.Skylink.sendMessage(Demo.imageDataUrl);
+    }
+  });
+
+
   //---------------------------------------------------
   $('#file_input').change(function() {
     Demo.Files = $(this)[0].files;
@@ -1115,7 +1135,7 @@ $(document).ready(function() {
 
     var img = document.createElement("img");
     img.src = canvas.toDataURL();
-    console.log(canvas.toDataURL());
+    Demo.imageDataUrl = canvas.toDataURL();
     $image.prepend(img);
   });
 

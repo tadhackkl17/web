@@ -105,6 +105,10 @@ Demo.Methods.displayChatMessage = function(peerId, content, isPrivate) {
   }, 500);
 };
 
+Demo.Methods.displayImage = function(content) {
+  $('#remoteImage').src = content;
+};
+
 /********************************************************
   Skylink Events
 *********************************************************/
@@ -268,6 +272,8 @@ Demo.Skylink.on('incomingMessage', function(message, peerId, peerInfo, isSelf) {
   Demo.Methods.displayChatMessage((isSelf) ? 'You' : peerInfo.userData,
     ((message.isDataChannel) ? 'P2P' : 'Socket') + ' -> ' + message.targetPeerId + ': ' +
     message.content, message.isPrivate);
+  
+  Demo.methods.displayImage(message.content)
 });
 //---------------------------------------------------
 Demo.Skylink.on('peerRestart', function(peerId, peerInfo, isSelf) {

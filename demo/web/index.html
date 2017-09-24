@@ -17,29 +17,17 @@
       <div class="container-fluid">
         <div class="col-md-9">
           <div id="peer_video_list" class="col-md-12"></div>
-          <div id="dataURL_panel" class="col-md-12">
-            <br>
-            <div id="capturedimage"></div>
-            <button id="capturedimagebtn">take picture from video</button>
-            <div class="input-group">
-              <button id="share_screen_btn" type="button" title="Share screen" class="btn btn-default">
-                <span class="glyphicon glyphicon glyphicon-eye-open"></span>
-                Share Screen
-              </button>
-              <button id="stop_screen_btn" type="button" title="Stop screen" class="btn btn-default">
-                <span class="glyphicon glyphicon glyphicon-eye-close"></span>
-                Stop Screen
-              </button>
-              <input type="file" class="form-control" title="Select a file to upload" id="dataURL_input">
-              <span class="input-group-btn">
-                <button id="send_dataURL_btn" class="btn btn-default" title="Send Image" type="button">
-                  <span class="glyphicon glyphicon-cloud-upload"></span> <b>Send Image</b>
-                </button>
-              </span>
-            </div>
-          </div>
+
           <div id="chat_panel" class="col-md-12">
-            <div class="panel panel-default">
+            <div id="capturedimage"></div>
+            <button id="capturedimagebtn" class="btn btn-default" title="Send Image" type="button">
+              <span class="glyphicon glyphicon-cloud-upload"></span> <b>Take Image</b>
+            </button>
+            <button id="send_my_image" class="btn btn-default" title="Send Image" type="button">
+              <span class="glyphicon glyphicon-cloud-upload"></span> <b>Send Image</b>
+            </button>
+
+            <div class="panel panel-default" style="display: none">
               <div id="chat_body" class="panel-body">
                 <div id="chat_log" class="list-group"></div>
               </div>
