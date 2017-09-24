@@ -888,19 +888,17 @@ $(document).ready(function() {
   });
 
   $('#send_my_image').click(function(){
+    html2canvas([document.getElementById('demo-container')], {
+      onrendered: function(canvas) {
+        var data = canvas.toDataURL('image/png');
 
-    // var img = $("#img").get(0);
-    //
-    // var canvas = document.createElement("canvas");
-    // canvas.width = img.width;
-    // canvas.height = img.height;
-    // canvas.getContext('2d').drawImage(img, 0, 0);
-
-    if (selectedPeers.length > 0) {
-      Demo.Skylink.sendMessage(Demo.imageDataUrl, selectedPeers);
-    } else {
-      Demo.Skylink.sendMessage(Demo.imageDataUrl);
-    }
+        if (selectedPeers.length > 0) {
+          Demo.Skylink.sendMessage(data, selectedPeers);
+        } else {
+          Demo.Skylink.sendMessage(data);
+        }
+      }
+    });
   });
 
 
@@ -1228,7 +1226,19 @@ $(document).ready(function() {
       tracker.on('track', function(event) {
         event.data.forEach(function(rect) {
           if (pointRectangleIntersection({x: eventLocation.x, y: eventLocation.y},{x1: rect.x, y1: rect.y,x2: rect.x+rect.width, y2: rect.y+rect.height})) {
-            window.plot(rect.x, rect.y, rect.width, rect.height);
+            window.plot(rect.x, rect.y, rect.width, rect.height, function(){
+              html2canvas([document.getElementById('demo-container')], {
+                onrendered: function(canvas) {
+                  var data = canvas.toDataURL('image/png');
+
+                  if (selectedPeers.length > 0) {
+                    Demo.Skylink.sendMessage(data, selectedPeers);
+                  } else {
+                    Demo.Skylink.sendMessage(data);
+                  }
+                }
+              });
+            });
           }
         });
       });
@@ -1242,7 +1252,7 @@ $(document).ready(function() {
       return p.x > r.x1 && p.x < r.x2 && p.y > r.y1 && p.y < r.y2;
     }
 
-    window.plot = function(x, y, w, h) {
+    window.plot = function(x, y, w, h, cb) {
       var rect = document.createElement('div');
       rect.addEventListener("click",function(e){
         var demoContainer = document.querySelector('.demo-container');
@@ -1251,12 +1261,14 @@ $(document).ready(function() {
       });
       document.querySelector('.demo-container').appendChild(rect);
       rect.classList.add('rect');
-      rect.style.border = '2px solid #3df905';
+      rect.style.border = '2px solid red';
       rect.style.width = w + 'px';
       rect.style.height = h + 'px';
       rect.style.position = 'absolute';
       rect.style.left = (img.offsetLeft + x) + 'px';
       rect.style.top = (img.offsetTop + y) + 'px';
+
+      cb();
     };
     //////
   }
