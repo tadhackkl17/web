@@ -17,32 +17,23 @@
       <div class="container-fluid">
         <div class="col-md-9">
           <div id="peer_video_list" class="col-md-12"></div>
-          <div id="dataURL_panel" class="col-md-12">
-            <br>
-            <div class="input-group">
-              <input type="file" class="form-control" title="Select a file to upload" id="dataURL_input">
-              <span class="input-group-btn">
-                <button id="send_dataURL_btn" class="btn btn-default" title="Send Image" type="button">
-                  <span class="glyphicon glyphicon-cloud-upload"></span> <b>Send Image</b>
-                </button>
-              </span>
-            </div>
-          </div>
           <div id="chat_panel" class="col-md-12">
             <div class="panel panel-default">
               <div id="chat_body" class="panel-body">
                 <div id="chat_log" class="list-group"></div>
               </div>
             </div>
-            <form role="form">
-              <div class="checkbox">
-                <label>
-                  <input id="send_data_channel" type="checkbox">
-                  <b>Send via P2P channel</b> <span class="glyphicon glyphicon-transfer"></span>
-                </label>
-              </div>
-            </form>
-            <textarea id="chat_input" placeholder="Enter your chat message here" class="well" disabled></textarea>
+            <div style="display: none">
+              <form role="form">
+                <div class="checkbox">
+                  <label>
+                    <input id="send_data_channel" type="checkbox">
+                    <b>Send via P2P channel</b> <span class="glyphicon glyphicon-transfer"></span>
+                  </label>
+                </div>
+              </form>
+              <textarea id="chat_input" placeholder="Enter your chat message here" class="well" disabled></textarea>
+            </div>
           </div>
         </div>
       </div>
