@@ -1149,7 +1149,10 @@ $(document).ready(function() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     var img = document.getElementById("img");
-    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+    img.onload = function(){
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+    };
 
     function getElementPosition(obj) {
       var curleft = 0, curtop = 0;
@@ -1251,6 +1254,7 @@ $(document).ready(function() {
       rect.style.border = '2px solid #3df905';
       rect.style.width = w + 'px';
       rect.style.height = h + 'px';
+      rect.style.position = 'absolute';
       rect.style.left = (img.offsetLeft + x) + 'px';
       rect.style.top = (img.offsetTop + y) + 'px';
     };
