@@ -889,7 +889,7 @@ $(document).ready(function() {
 
   $('#send_my_image').click(function(){
 
-    // var img = $("#capturedimage");
+    // var img = $("#img").get(0);
     //
     // var canvas = document.createElement("canvas");
     // canvas.width = img.width;
@@ -1125,18 +1125,139 @@ $(document).ready(function() {
       'media and document files can be downloaded in the new tab.</small>');
   }
 
-  $('#capturedimagebtn').click(function() {
-    var $image = $("#capturedimage");
+  $('#imgbtn').click(function() {
+    var $image = $("#img").get(0);
     var video = $(".video-obj").get(1);
 
     var canvas = document.createElement("canvas");
     canvas.getContext('2d')
         .drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    var img = document.createElement("img");
-    img.src = canvas.toDataURL();
+    $image.src = canvas.toDataURL();
     Demo.imageDataUrl = canvas.toDataURL();
-    $image.prepend(img);
+    start();
   });
+
+
+
+
+
+  //////////////////////////
+
+  function start(){
+    var demoContainer = document.querySelector('.demo-container');
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("img");
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+    function getElementPosition(obj) {
+      var curleft = 0, curtop = 0;
+      if (obj.offsetParent) {
+        do {
+          curleft += obj.offsetLeft;
+          curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+        return { x: curleft, y: curtop };
+      }
+      return undefined;
+    }
+
+    function getEventLocation(element,event){
+      var pos = getElementPosition(element);
+
+      return {
+        x: (event.pageX - pos.x),
+        y: (event.pageY - pos.y)
+      };
+    }
+
+    function rgbToHex(r, g, b) {
+      if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+      return ((r << 16) | (g << 8) | b).toString(16);
+    }
+
+
+    canvas.addEventListener("click",function(e){
+      var demoContainer = document.querySelector('.demo-container');
+      var rects = demoContainer.getElementsByClassName('rect');
+      while (rects.length > 0) rects[0].remove();
+      var eventLocation = getEventLocation(this,e);
+      var coord = "x=" + eventLocation.x + ", y=" + eventLocation.y;
+
+      // Get the data of the pixel according to the location generate by the getEventLocation function
+      var context = this.getContext('2d');
+      var pixelData = context.getImageData(eventLocation.x, eventLocation.y, 1, 1).data;
+
+      // If transparency on the image
+      if((pixelData[0] == 0) && (pixelData[1] == 0) && (pixelData[2] == 0) && (pixelData[3] == 0)){
+        coord += " (Transparent color detected, cannot be converted to HEX)";
+      }
+
+      var hex = "#" + ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
+
+      // Draw the color and coordinates.
+      document.getElementById("status").innerHTML = coord;
+      document.getElementById("color").style.backgroundColor = hex;
+
+
+      tracking.ColorTracker.registerColor('mycustomcolor', function(r, g, b) {
+        var threshold = 1000,
+            dr = r - pixelData[0],
+            dg = g - pixelData[1],
+            db = b - pixelData[2];
+        fr = 2; // may be adjusted
+        fg = 4; // "
+        fb = 1; // "
+        distance_squared = fr * dr * dr + fg * dg * dg + fb * db * db;
+        // console.log(distance_squared);
+        if(distance_squared <= threshold) {
+          return true;
+        } else {
+          return false;
+        }
+
+      });
+
+      var tracker = new tracking.ColorTracker(['mycustomcolor']);
+
+      tracker.on('track', function(event) {
+        event.data.forEach(function(rect) {
+          if (pointRectangleIntersection({x: eventLocation.x, y: eventLocation.y},{x1: rect.x, y1: rect.y,x2: rect.x+rect.width, y2: rect.y+rect.height})) {
+            window.plot(rect.x, rect.y, rect.width, rect.height);
+          }
+        });
+      });
+
+      tracking.track('#img', tracker);
+
+    },false);
+
+
+    function pointRectangleIntersection(p, r) {
+      return p.x > r.x1 && p.x < r.x2 && p.y > r.y1 && p.y < r.y2;
+    }
+
+    window.plot = function(x, y, w, h) {
+      var rect = document.createElement('div');
+      rect.addEventListener("click",function(e){
+        var demoContainer = document.querySelector('.demo-container');
+        var rects = demoContainer.getElementsByClassName('rect');
+        while (rects.length > 0) rects[0].remove();
+      });
+      document.querySelector('.demo-container').appendChild(rect);
+      rect.classList.add('rect');
+      rect.style.border = '2px solid #3df905';
+      rect.style.width = w + 'px';
+      rect.style.height = h + 'px';
+      rect.style.left = (img.offsetLeft + x) + 'px';
+      rect.style.top = (img.offsetTop + y) + 'px';
+    };
+    //////
+  }
+
+
+
 
 });

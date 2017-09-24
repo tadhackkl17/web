@@ -106,7 +106,7 @@ Demo.Methods.displayChatMessage = function(peerId, content, isPrivate) {
 };
 
 Demo.Methods.displayImage = function(content) {
-  $('#remoteImage').src = content;
+  $('#remoteImage').get(0).src = content;
 };
 
 /********************************************************

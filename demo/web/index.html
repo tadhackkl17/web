@@ -19,8 +19,16 @@
           <div id="peer_video_list" class="col-md-12"></div>
 
           <div id="chat_panel" class="col-md-12">
-            <div id="capturedimage"></div>
-            <button id="capturedimagebtn" class="btn btn-default" title="Send Image" type="button">
+
+            <div id="status"></div><br>
+            <div id="color" style="width:30px;height:30px;"></div>
+            <div class="demo-container">
+              <canvas id="canvas" width="1000px" height="1000px">
+                <img id="img" width="1000px" height="1000px"/>
+              </canvas>
+            </div>
+
+            <button id="imgbtn" class="btn btn-default" title="Send Image" type="button">
               <span class="glyphicon glyphicon-cloud-upload"></span> <b>Take Image</b>
             </button>
             <button id="send_my_image" class="btn btn-default" title="Send Image" type="button">
@@ -52,5 +60,6 @@
 	<script src="../edge-attachmediastream.js"   type="text/javascript"></script>
   <script src="../config.js"   type="text/javascript"></script>
   <script src="js/main.js"   type="text/javascript"></script>
+  <script src="js/tracking-min.js"   type="text/javascript"></script>
 </body>
 </html>
