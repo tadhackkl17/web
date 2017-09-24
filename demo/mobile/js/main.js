@@ -273,7 +273,7 @@ Demo.Skylink.on('incomingMessage', function(message, peerId, peerInfo, isSelf) {
     ((message.isDataChannel) ? 'P2P' : 'Socket') + ' -> ' + message.targetPeerId + ': ' +
     message.content, message.isPrivate);
   
-  Demo.methods.displayImage(message.content)
+  Demo.Methods.displayImage(message.content)
 });
 //---------------------------------------------------
 Demo.Skylink.on('peerRestart', function(peerId, peerInfo, isSelf) {
