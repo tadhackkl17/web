@@ -372,7 +372,7 @@ Demo.Skylink.on('peerJoined', function(peerId, peerInfo, isSelf) {
     peerElm.appendChild(peerVideo);
 
     if($('.col-md-6.peervideo').length == 2){
-      $('.col-md-6.peervideo')[1].style.display = 'none';
+      // $('.col-md-6.peervideo')[1].style.display = 'none';
     }
 
     $(peerElm).append('<div class="connstats-wrapper"><button class="toggle-connstats" data="' + (isSelf ? 'MCU' : peerId) +
@@ -416,7 +416,7 @@ Demo.Skylink.on('incomingStream', function(peerId, stream, isSelf, peerInfo) {
     peerElm.appendChild(peerVideo);
 
     if($('.col-md-6.peervideo').length == 2) {
-      $('.col-md-6.peervideo')[1].style.display = 'none';
+      // $('.col-md-6.peervideo')[1].style.display = 'none';
     }
 
     if (!isSelf) {
